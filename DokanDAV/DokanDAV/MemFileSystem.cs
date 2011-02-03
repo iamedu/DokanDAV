@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.Diagnostics;
+
 using System.Security.Cryptography;
 using WebdavClient;
 
@@ -23,6 +25,25 @@ namespace DokanDAV
             root.LastAccessed = DateTime.Now;
             root.LastUpdated = DateTime.Now;
             root.Type = DAVType.Folder;
+        }
+
+        public bool Delete(string path)
+        {
+            string parent = Parent(path);
+            string filename = Filename(path);
+
+
+            if (!Exists(path))
+            {
+                return false;
+            }
+
+            MemFile parentNode = Lookup(parent);
+
+            
+            parentNode.Remove(filename);
+            return true;
+
         }
 
         public MemFile CreateDirectory(string path)
