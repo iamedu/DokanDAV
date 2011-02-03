@@ -225,7 +225,6 @@ namespace DokanDAV
             using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 file = Lookup(webFilename);
-
                 fs.Write(buffer, iOffset, buffer.Length);
                 writtenBytes = (uint)buffer.Length;
 
@@ -262,7 +261,13 @@ namespace DokanDAV
             return BitConverter.ToString(sp.ComputeHash(Encoding.Default.GetBytes(value))).Replace("-", "");
         }
 
-
-        
+        public void SetEndOfFile(string webFilename, long length)
+        {
+            string localFilename = LocalFilename(webFilename);
+            using(FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                fs.SetLength(length);
+            }
+        }
     }
 }
