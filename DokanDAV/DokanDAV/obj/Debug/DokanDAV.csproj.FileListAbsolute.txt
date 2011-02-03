@@ -1,0 +1,9 @@
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\DokanDAV.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\DokanDAV.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\DokanNet.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\WebdavClient.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\WebdavClient.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\bin\Debug\DokanNet.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\obj\Debug\DokanDAV.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DokanDAV\obj\Debug\DokanDAV.pdb

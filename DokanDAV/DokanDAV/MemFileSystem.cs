@@ -39,11 +39,18 @@ namespace DokanDAV
             }
 
             MemFile parentNode = Lookup(parent);
+            MemFile node = parentNode[filename];
 
-            
+            if (!node.TryLock())
+            {
+                return false;
+            }
+
             parentNode.Remove(filename);
-            return true;
 
+            node.Unlock();
+
+            return true;
         }
 
         public MemFile CreateDirectory(string path)
@@ -56,7 +63,7 @@ namespace DokanDAV
 
             childNode.DateCreated = DateTime.Now;
             childNode.LastUpdated = DateTime.Now;
-            childNode.LastUpdated = DateTime.Now;
+            childNode.LastAccessed = DateTime.Now;
             childNode.Type = DAVType.Folder;
             childNode.Length = 0;
             childNode.AbsolutePath = path;
@@ -87,18 +94,24 @@ namespace DokanDAV
 
         public void MoveFile(string sourcePath, string destinationPath)
         {
+            string sourceParent = Parent(sourcePath);
+            string sourceFilename = Filename(sourcePath);
             string destinationParent = Parent(destinationPath);
             string destinationFilename = Filename(destinationPath);
 
+            MemFile sourceParentNode = Lookup(sourceParent);
             MemFile sourceNode = Lookup(sourcePath);
             MemFile destinationNode = Lookup(destinationParent);
 
             sourceNode.LastUpdated = DateTime.Now;
             sourceNode.LastAccessed = DateTime.Now;
+            sourceNode.DateCreated = DateTime.Now;
+
             sourceNode.AbsolutePath = destinationPath;
 
             destinationNode[destinationFilename] = sourceNode;
-
+            sourceParentNode.Remove(sourceFilename);
+            
         }
 
         public MemFile CreateFile(string path, int length = 0, bool remote = true)
@@ -117,7 +130,6 @@ namespace DokanDAV
             childNode.AbsolutePath = path;
 
             parentNode[filename] = childNode;
-
 
             return childNode;
         }
@@ -171,6 +183,13 @@ namespace DokanDAV
 
             foreach (string part in parts)
             {
+                if (part.Length == 0)
+                {
+                    continue;
+                }
+                if(!helper.ContainsKey(part)) {
+                    return null;
+                }
                 helper = helper[part];
             }
 

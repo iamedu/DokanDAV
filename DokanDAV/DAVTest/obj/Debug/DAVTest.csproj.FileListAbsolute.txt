@@ -1,0 +1,11 @@
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DAVTest.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DokanDAV.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DokanNet.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\WebdavClient.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DokanDAV.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DokanNet.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\WebdavClient.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\obj\Debug\DAVTest.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\bin\Debug\DAVTest.exe
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\DAVTest\obj\Debug\DAVTest.exe

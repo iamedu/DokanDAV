@@ -1,0 +1,5 @@
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\WebdavClient\bin\Debug\WebdavClient.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\WebdavClient\bin\Debug\WebdavClient.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\WebdavClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\WebdavClient\obj\Debug\WebdavClient.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\WebdavClient\obj\Debug\WebdavClient.pdb

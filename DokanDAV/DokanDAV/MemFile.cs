@@ -5,8 +5,18 @@ using System.Text;
 
 using WebdavClient;
 
+using System.IO;
+
 namespace DokanDAV
 {
+    public class MemFileContext
+    {
+        public FileMode Mode { get; set; }
+        public FileAccess Access { get; set; }
+        public FileShare Share { get; set; }
+        public FileOptions Options { get; set; }
+    }
+
     public class MemFile : IDictionary<string, MemFile>
     {
         private Dictionary<string, MemFile> files;
