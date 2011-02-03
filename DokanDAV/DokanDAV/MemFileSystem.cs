@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using System.Diagnostics;
-
 using System.Security.Cryptography;
 using WebdavClient;
+using System.IO;
 
 namespace DokanDAV
 {
@@ -17,14 +16,25 @@ namespace DokanDAV
     public class MemFileSystem
     {
         private MemFile root;
+        public string BasePath { get; private set; }
 
-        public MemFileSystem()
+        public MemFileSystem(string basePath)
         {
             root = new MemFile(false);
             root.DateCreated = DateTime.Now;
             root.LastAccessed = DateTime.Now;
             root.LastUpdated = DateTime.Now;
             root.Type = DAVType.Folder;
+
+            BasePath = basePath;
+
+            if (Directory.Exists(BasePath))
+            {
+                Directory.Delete(BasePath, true);
+            }
+
+            Directory.CreateDirectory(BasePath);
+
         }
 
         public bool Delete(string path)
@@ -110,8 +120,8 @@ namespace DokanDAV
             sourceNode.AbsolutePath = destinationPath;
 
             destinationNode[destinationFilename] = sourceNode;
+
             sourceParentNode.Remove(sourceFilename);
-            
         }
 
         public MemFile CreateFile(string path, int length = 0, bool remote = true)
@@ -124,7 +134,7 @@ namespace DokanDAV
 
             childNode.DateCreated = DateTime.Now;
             childNode.LastUpdated = DateTime.Now;
-            childNode.LastUpdated = DateTime.Now;
+            childNode.LastAccessed = DateTime.Now;
             childNode.Type = DAVType.File;
             childNode.Length = length;
             childNode.AbsolutePath = path;
@@ -206,5 +216,53 @@ namespace DokanDAV
         }
 
 
+        public void WriteFile(string webFilename, byte[] buffer, ref uint writtenBytes, long offset)
+        {
+            string localFilename = LocalFilename(webFilename);
+            int iOffset = (int)offset;
+            MemFile file;
+
+            using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                file = Lookup(webFilename);
+
+                fs.Write(buffer, iOffset, buffer.Length);
+                writtenBytes = (uint)buffer.Length;
+
+                file.Length = fs.Length;
+            }
+        }
+
+        public void ReadFile(string webFilename, byte[] buffer, ref uint readBytes, long offset)
+        {
+            string localFilename = LocalFilename(webFilename);
+            int iOffset = (int)offset;
+
+            using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
+            {
+                fs.Read(buffer, iOffset, buffer.Length);
+                readBytes = (uint)buffer.Length;
+            }
+
+        }
+
+        public string LocalFilename(string path)
+        {
+            return BasePath + SHA1(path);
+        }
+
+        public void Umount()
+        {
+            Directory.Delete(BasePath, true);
+        }
+
+        private string SHA1(string value)
+        {
+            SHA1CryptoServiceProvider sp = new SHA1CryptoServiceProvider();
+            return BitConverter.ToString(sp.ComputeHash(Encoding.Default.GetBytes(value))).Replace("-", "");
+        }
+
+
+        
     }
 }

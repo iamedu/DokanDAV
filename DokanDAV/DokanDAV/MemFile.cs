@@ -30,7 +30,7 @@ namespace DokanDAV
             get;
             set;
         }
-        public int Length
+        public long Length
         {
             get;
             set;
@@ -112,8 +112,11 @@ namespace DokanDAV
             }
             set
             {
-                value.Name = key;
-                files[key] = value;
+                if (Type == DAVType.Folder && key.Length > 0)
+                {
+                    value.Name = key;
+                    files[key] = value;
+                }
             }
         }
 

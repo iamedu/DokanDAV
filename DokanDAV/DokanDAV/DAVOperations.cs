@@ -16,20 +16,21 @@ namespace DokanDAV
 
         public DAVOperations()
         {
-            memfs = new MemFileSystem();
-            Debug.WriteLine("This is a beautiful day");
+            string userHome = Environment.GetEnvironmentVariable("USERPROFILE");
+            memfs = new MemFileSystem(userHome + "\\.davfs\\");
+            Console.WriteLine("This is a beautiful day");
         }
 
         public int Cleanup(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("Cleanup " + filename);
+            Console.WriteLine("Cleanup " + filename);
             string webFilename = Normalize(filename);
             return 0;
         }
 
         public int CloseFile(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("CloseFile " + filename);
+            Console.WriteLine("CloseFile " + filename);
             string webFilename = Normalize(filename);
 
             MemFile file = memfs.Lookup(webFilename);
@@ -44,7 +45,7 @@ namespace DokanDAV
 
         public int CreateDirectory(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("CreateDirectory " + filename);
+            Console.WriteLine("CreateDirectory " + filename);
             string webFilename = Normalize(filename);
 
             memfs.CreateDirectory(webFilename);
@@ -56,7 +57,7 @@ namespace DokanDAV
 
         public int CreateFile(string filename, System.IO.FileAccess access, System.IO.FileShare share, System.IO.FileMode mode, System.IO.FileOptions options, DokanFileInfo info)
         {
-            Debug.WriteLine("CreateFile " + filename + " " + mode);
+            Console.WriteLine("CreateFile " + filename + " " + mode);
             string webFilename = Normalize(filename);
 
             MemFileContext context = new MemFileContext();
@@ -89,14 +90,15 @@ namespace DokanDAV
                         }
                     }
 
-
                     file = memfs.CreateFile(webFilename);
 
                     break;
                 case FileMode.CreateNew:
+                    
+
                     if (memfs.Exists(webFilename))
                     {
-                        return DokanNet.ERROR_ALREADY_EXISTS;
+                        return -DokanNet.ERROR_ALREADY_EXISTS;
                     }
 
                     file = memfs.CreateFile(webFilename);
@@ -154,7 +156,7 @@ namespace DokanDAV
 
         public int DeleteDirectory(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("DeleteDirectory " + filename);
+            Console.WriteLine("DeleteDirectory " + filename);
             string webFilename = Normalize(filename);
             if (!memfs.Exists(webFilename))
             {
@@ -169,13 +171,23 @@ namespace DokanDAV
 
         public int DeleteFile(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("DeleteFile " + filename);
-            throw new NotImplementedException();
+            Console.WriteLine("DeleteFile " + filename);
+
+            string webFilename = Normalize(filename);
+            if (!memfs.Exists(webFilename))
+            {
+                return -DokanNet.ERROR_PATH_NOT_FOUND;
+            }
+            if (memfs.Delete(webFilename))
+            {
+                return 0;
+            }
+            return -1;
         }
 
         public int FindFiles(string filename, System.Collections.ArrayList files, DokanFileInfo info)
         {
-            Debug.WriteLine("FindFiles " + filename);
+            Console.WriteLine("FindFiles " + filename);
             string webFilename = Normalize(filename);
 
             if (!memfs.Exists(webFilename))
@@ -211,24 +223,31 @@ namespace DokanDAV
 
         public int FlushFileBuffers(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("FlushFileBuffers " + filename);
+            Console.WriteLine("FlushFileBuffers " + filename);
             return -1;
         }
 
         public int GetDiskFreeSpace(ref ulong freeBytesAvailable, ref ulong totalBytes, ref ulong totalFreeBytes, DokanFileInfo info)
         {
-            Debug.WriteLine("GetDiskFreeSpace");
-            return -1;
+            freeBytesAvailable = 512 * 1024 * 1024;
+            totalBytes = 1024 * 1024 * 1024;
+            totalFreeBytes = 512 * 1024 * 1024;
+            return 0;
         }
 
         public int GetFileInformation(string filename, FileInformation fileinfo, DokanFileInfo info)
         {
-            Debug.WriteLine("GetFileInformation " + filename);
+            Console.WriteLine("GetFileInformation " + filename);
             string webFilename = Normalize(filename);
+
             if(!memfs.Exists(webFilename))
             {
+                Console.WriteLine("It doesn't exist");
                 return -DokanNet.ERROR_PATH_NOT_FOUND;
             }
+
+            Console.WriteLine("Working alright!");
+
             MemFile mf = memfs.Lookup(webFilename);
 
             fileinfo.Length = mf.Length;
@@ -256,7 +275,7 @@ namespace DokanDAV
 
         public int MoveFile(string filename, string newname, bool replace, DokanFileInfo info)
         {
-            Debug.WriteLine("Move file " + filename + " " + newname);
+            Console.WriteLine("Move file " + filename + " " + newname);
             string webFilename = Normalize(filename);
             string newWebFilename = Normalize(newname);
 
@@ -274,7 +293,7 @@ namespace DokanDAV
 
         public int OpenDirectory(string filename, DokanFileInfo info)
         {
-            Debug.WriteLine("OpenDirectory " + filename);
+            Console.WriteLine("OpenDirectory " + filename);
             string webFilename = Normalize(filename);
             MemFile file;
             if (!memfs.Exists(webFilename))
@@ -295,50 +314,79 @@ namespace DokanDAV
 
         public int ReadFile(string filename, byte[] buffer, ref uint readBytes, long offset, DokanFileInfo info)
         {
-            Debug.WriteLine("ReadFile " + filename);
-            return -1;
+            Console.WriteLine("ReadFile " + filename);
+            string webFilename = Normalize(filename);
+
+            try
+            {
+                memfs.ReadFile(webFilename, buffer, ref readBytes, offset);
+            }
+            catch
+            {
+                return -1;
+            }
+
+            return 0;
         }
 
         public int SetAllocationSize(string filename, long length, DokanFileInfo info)
         {
-            Debug.WriteLine("SetAllocationSize " + filename);
+            Console.WriteLine("SetAllocationSize " + filename);
             return -1;
         }
 
         public int SetEndOfFile(string filename, long length, DokanFileInfo info)
         {
-            Debug.WriteLine("SetEndOfFile " + filename);
+            Console.WriteLine("SetEndOfFile " + filename);
             return -1;
         }
 
         public int SetFileAttributes(string filename, System.IO.FileAttributes attr, DokanFileInfo info)
         {
-            Debug.WriteLine("SetFileAttributes " + filename);
+            Console.WriteLine("SetFileAttributes " + filename);
             return -1;
         }
 
         public int SetFileTime(string filename, DateTime ctime, DateTime atime, DateTime mtime, DokanFileInfo info)
         {
-            Debug.WriteLine("SetFileTime " + filename);
+            Console.WriteLine("SetFileTime " + filename);
             return -1;
         }
 
         public int UnlockFile(string filename, long offset, long length, DokanFileInfo info)
         {
-            Debug.WriteLine("UnlockFile " + filename);
+            Console.WriteLine("UnlockFile " + filename);
             return 0;
         }
 
         public int Unmount(DokanFileInfo info)
         {
-            Debug.WriteLine("Unmounting fs");
+            Console.WriteLine("Unmounting fs");
+
+            memfs.Umount();
+
             return 0;
         }
 
         public int WriteFile(string filename, byte[] buffer, ref uint writtenBytes, long offset, DokanFileInfo info)
         {
-            Debug.WriteLine("WriteFile " + filename);
-            return -1;
+            Console.WriteLine("WriteFile " + filename);
+            string webFilename = Normalize(filename);
+
+            try
+            {
+                memfs.WriteFile(webFilename, buffer, ref writtenBytes, offset);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return -DokanNet.ERROR_ACCESS_DENIED;
+            }
+            catch
+            {
+                return -1;
+            }
+            
+            return 0;
         }
 
         private string Normalize(string filename)
