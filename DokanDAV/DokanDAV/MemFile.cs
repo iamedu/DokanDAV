@@ -15,6 +15,7 @@ namespace DokanDAV
         public FileAccess Access { get; set; }
         public FileShare Share { get; set; }
         public FileOptions Options { get; set; }
+        public MemFile File { get; set; } 
     }
 
     public class MemFile : IDictionary<string, MemFile>

@@ -160,7 +160,6 @@ namespace DokanDAV
             }
 
             return parent.Values;
-
         }
 
         public bool Exists(string path)

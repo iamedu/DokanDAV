@@ -446,6 +446,16 @@ namespace DokanDAV
             return 0;
         }
 
+        private void FillList(string filename)
+        {
+            string webFilename = Normalize(filename);
+            MemFile parent = memfs.Lookup(webFilename);
+            List<DAVFileInfo> davFileInfo = client.List(webFilename);
+
+
+
+        }
+
         private string Normalize(string filename)
         {
             return filename.Replace('\\', '/');
