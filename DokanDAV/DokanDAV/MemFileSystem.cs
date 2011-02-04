@@ -219,13 +219,13 @@ namespace DokanDAV
         public void WriteFile(string webFilename, byte[] buffer, ref uint writtenBytes, long offset)
         {
             string localFilename = LocalFilename(webFilename);
-            int iOffset = (int)offset;
             MemFile file;
 
             using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 file = Lookup(webFilename);
-                fs.Write(buffer, iOffset, buffer.Length);
+                fs.Seek(offset, SeekOrigin.Begin);
+                fs.Write(buffer, 0, buffer.Length);
                 writtenBytes = (uint)buffer.Length;
 
                 file.Length = fs.Length;
@@ -235,11 +235,11 @@ namespace DokanDAV
         public void ReadFile(string webFilename, byte[] buffer, ref uint readBytes, long offset)
         {
             string localFilename = LocalFilename(webFilename);
-            int iOffset = (int)offset;
 
             using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
             {
-                fs.Read(buffer, iOffset, buffer.Length);
+                fs.Seek(offset, SeekOrigin.Begin);
+                fs.Read(buffer, 0, buffer.Length);
                 readBytes = (uint)buffer.Length;
             }
 
