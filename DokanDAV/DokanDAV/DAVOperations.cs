@@ -158,14 +158,17 @@ namespace DokanDAV
         {
             Debug.WriteLine("DeleteDirectory " + filename);
             string webFilename = Normalize(filename);
+
             if (!memfs.Exists(webFilename))
             {
                 return -DokanNet.ERROR_PATH_NOT_FOUND;
             }
+
             if (memfs.Delete(webFilename))
             {
                 return 0;
             }
+
             return -1;
         }
 
@@ -182,6 +185,7 @@ namespace DokanDAV
             {
                 return 0;
             }
+
             return -1;
         }
 
@@ -334,7 +338,7 @@ namespace DokanDAV
 
         public int SetEndOfFile(string filename, long length, DokanFileInfo info)
         {
-            Console.WriteLine("SetEndOfFile " + filename);
+            Debug.WriteLine("SetEndOfFile " + filename);
             string webFilename = Normalize(filename);
             try
             {
@@ -377,7 +381,7 @@ namespace DokanDAV
 
         public int WriteFile(string filename, byte[] buffer, ref uint writtenBytes, long offset, DokanFileInfo info)
         {
-            Console.WriteLine("WriteFile " + filename + " " + offset + " " + (buffer.Length));
+            Debug.WriteLine("WriteFile " + filename + " " + offset + " " + (buffer.Length));
             string webFilename = Normalize(filename);
 
             try

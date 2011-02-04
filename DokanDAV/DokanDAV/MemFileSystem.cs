@@ -50,15 +50,11 @@ namespace DokanDAV
 
             MemFile parentNode = Lookup(parent);
             MemFile node = parentNode[filename];
-
-            if (!node.TryLock())
-            {
-                return false;
-            }
+            string localFilename = LocalFilename(path);
 
             parentNode.Remove(filename);
-
             node.Unlock();
+            File.Delete(localFilename);
 
             return true;
         }
@@ -109,6 +105,9 @@ namespace DokanDAV
             string destinationParent = Parent(destinationPath);
             string destinationFilename = Filename(destinationPath);
 
+            string sourceLocal = LocalFilename(sourcePath);
+            string destinationLocal = LocalFilename(destinationPath);
+
             MemFile sourceParentNode = Lookup(sourceParent);
             MemFile sourceNode = Lookup(sourcePath);
             MemFile destinationNode = Lookup(destinationParent);
@@ -122,6 +121,9 @@ namespace DokanDAV
             destinationNode[destinationFilename] = sourceNode;
 
             sourceParentNode.Remove(sourceFilename);
+
+            File.Move(sourceLocal, destinationLocal);
+
         }
 
         public MemFile CreateFile(string path, int length = 0, bool remote = true)
