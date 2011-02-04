@@ -20,54 +20,16 @@ namespace DokanDAV
     public class MemFile : IDictionary<string, MemFile>
     {
         private Dictionary<string, MemFile> files;
-        public string Name
-        {
-            get;
-            private set;
-        }
-        public string AbsolutePath
-        {
-            get;
-            set;
-        }
-        public long Length
-        {
-            get;
-            set;
-        }
-        public DateTime DateCreated
-        {
-            get;
-            set;
-        }
-        public DateTime LastUpdated
-        {
-            get;
-            set;
-        }
-        public DateTime LastAccessed
-        {
-            get;
-            set;
-        }
-        public DAVType Type
-        {
-            get;
-            set;
-        }
-        public bool Remote
-        {
-            get;
-            set;
-        }
-
-
-
-        public bool Locked
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
+        public string AbsolutePath { get; set; }
+        public long Length { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime LastUpdated { get; set; }
+        public DateTime LastAccessed { get; set; }
+        public DAVType Type { get; set; }
+        public bool Remote { get; set; }
+        public bool Locked { get; private set; }
+        public bool LocallyModified { get; set; }
 
         private readonly object _locker = new object();
 

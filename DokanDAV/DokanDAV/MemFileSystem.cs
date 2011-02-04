@@ -16,6 +16,7 @@ namespace DokanDAV
     public class MemFileSystem
     {
         private MemFile root;
+
         public string BasePath { get; private set; }
 
         public MemFileSystem(string basePath)
@@ -122,7 +123,10 @@ namespace DokanDAV
 
             sourceParentNode.Remove(sourceFilename);
 
-            File.Move(sourceLocal, destinationLocal);
+            if (File.Exists(sourceLocal))
+            {
+                File.Move(sourceLocal, destinationLocal);
+            }
 
         }
 
@@ -231,6 +235,7 @@ namespace DokanDAV
                 writtenBytes = (uint)buffer.Length;
 
                 file.Length = fs.Length;
+                file.LocallyModified = true;
             }
         }
 
