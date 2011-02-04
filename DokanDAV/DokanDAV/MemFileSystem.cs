@@ -230,8 +230,10 @@ namespace DokanDAV
             using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 file = Lookup(webFilename);
+
                 fs.Seek(offset, SeekOrigin.Begin);
                 fs.Write(buffer, 0, buffer.Length);
+
                 writtenBytes = (uint)buffer.Length;
 
                 file.Length = fs.Length;

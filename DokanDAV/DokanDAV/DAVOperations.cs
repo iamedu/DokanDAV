@@ -40,11 +40,17 @@ namespace DokanDAV
         public int CloseFile(string filename, DokanFileInfo info)
         {
             string webFilename = Normalize(filename);
+            string localFilename = memfs.LocalFilename(webFilename);
 
             MemFile file = memfs.Lookup(webFilename);
 
             if (file != null)
             {
+                if (file.LocallyModified)
+                {
+                    file.LocallyModified = false;
+                    client.Upload(localFilename, webFilename);
+                }
                 file.Unlock();
             }
 
@@ -170,9 +176,10 @@ namespace DokanDAV
 
             if (!file.TryLock())
             {
-                file.LocallyModified = false;
                 return DokanNet.ERROR_SHARING_VIOLATION;
             }
+
+            file.LocallyModified = false;
 
             return 0;
         }
@@ -424,7 +431,6 @@ namespace DokanDAV
 
         public int WriteFile(string filename, byte[] buffer, ref uint writtenBytes, long offset, DokanFileInfo info)
         {
-            Debug.WriteLine("WriteFile " + filename + " " + offset + " " + (buffer.Length));
             string webFilename = Normalize(filename);
 
             try
@@ -433,7 +439,7 @@ namespace DokanDAV
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
                 return -1;
             }
             
