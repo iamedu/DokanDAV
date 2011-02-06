@@ -11,7 +11,7 @@ using DokanDAV;
 namespace DAVTest
 {
     public class Class1
-    {
+    {       
 
         public static void Main()
         {

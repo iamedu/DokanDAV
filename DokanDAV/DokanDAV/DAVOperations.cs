@@ -16,6 +16,8 @@ namespace DokanDAV
         private MemFileSystem memfs;
         private DAVClient client;
 
+        public long CacheMillis { get; set; }
+
         public DAVOperations()
         {
             string userHome = Environment.GetEnvironmentVariable("USERPROFILE");
@@ -27,6 +29,10 @@ namespace DokanDAV
                                                 "/repository/default",
                                                 "admin",
                                                 "admin");
+
+            CacheMillis = 30 * 1000;
+
+            FillList("/");
 
             Console.WriteLine("This is a beautiful day");
         }
@@ -245,6 +251,20 @@ namespace DokanDAV
 
             if (!memfs.Exists(webFilename))
             {
+
+                //Need to improve this, if it wasn't found check in the internet
+                try
+                {
+                    FillList(webFilename);
+                    if (!memfs.Exists(webFilename))
+                    {
+                        return -DokanNet.ERROR_PATH_NOT_FOUND;
+                    }
+                }
+                catch
+                {
+                    return -DokanNet.ERROR_PATH_NOT_FOUND;
+                }
                 return -DokanNet.ERROR_PATH_NOT_FOUND;
             }
 
@@ -369,6 +389,21 @@ namespace DokanDAV
         public int ReadFile(string filename, byte[] buffer, ref uint readBytes, long offset, DokanFileInfo info)
         {
             string webFilename = Normalize(filename);
+            string localFilename;
+
+            localFilename = memfs.LocalFilename(webFilename);
+
+            if (!File.Exists(localFilename))
+            {
+                try
+                {
+                    client.Download(localFilename, webFilename);
+                }
+                catch
+                {
+                    return -DokanNet.ERROR_FILE_NOT_FOUND;
+                }
+            }
 
             try
             {
@@ -452,7 +487,21 @@ namespace DokanDAV
             MemFile parent = memfs.Lookup(webFilename);
             List<DAVFileInfo> davFileInfo = client.List(webFilename);
 
+            parent.Clear();
 
+            foreach(DAVFileInfo info in davFileInfo)
+            {
+                MemFile memFile = new MemFile(true);
+
+                memFile.Length = info.Length;
+                memFile.DateCreated = info.DateCreated;
+                memFile.LastUpdated = info.LastModified;
+                memFile.LastAccessed = DateTime.Now;
+
+                memFile.Type = info.Type;
+
+                parent[info.Name] = memFile;
+            }
 
         }
 
