@@ -226,30 +226,41 @@ namespace DokanDAV
             string localFilename = LocalFilename(webFilename);
             MemFile file;
 
-            using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+            file = Lookup(webFilename);
+
+            lock (file.WriteLock)
             {
-                file = Lookup(webFilename);
+                using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+                {
 
-                fs.Seek(offset, SeekOrigin.Begin);
-                fs.Write(buffer, 0, buffer.Length);
 
-                writtenBytes = (uint)buffer.Length;
+                    fs.Seek(offset, SeekOrigin.Begin);
+                    fs.Write(buffer, 0, buffer.Length);
 
-                file.Length = fs.Length;
-                file.LocallyModified = true;
+                    writtenBytes = (uint)buffer.Length;
+
+                    file.Length = fs.Length;
+                    file.LocallyModified = true;
+                }
             }
+
         }
 
         public void ReadFile(string webFilename, byte[] buffer, ref uint readBytes, long offset)
         {
             string localFilename = LocalFilename(webFilename);
+            MemFile file = Lookup(webFilename);
 
-            using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
+            lock (file.WriteLock)
             {
-                fs.Seek(offset, SeekOrigin.Begin);
-                fs.Read(buffer, 0, buffer.Length);
-                readBytes = (uint)buffer.Length;
+                using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
+                {
+                    fs.Seek(offset, SeekOrigin.Begin);
+                    fs.Read(buffer, 0, buffer.Length);
+                    readBytes = (uint)buffer.Length;
+                }
             }
+
 
         }
 

@@ -32,6 +32,8 @@ namespace DokanDAV
         public bool Locked { get; private set; }
         public bool LocallyModified { get; set; }
 
+        public readonly object WriteLock = new object();
+
         private readonly object _locker = new object();
 
         public bool TryLock()
