@@ -230,7 +230,7 @@ namespace WebdavClient
 
             using (stream = request.GetRequestStream())
             {
-                using(FileStream fs = new FileStream(localPath, FileMode.Open, FileAccess.Read))
+                using(FileStream fs = File.Open(localPath, FileMode.Open, FileAccess.Read))
                 {
                     byte[] content = new byte[4096];
                     int bytesRead = 0;
@@ -268,7 +268,7 @@ namespace WebdavClient
 
                 using (Stream stream = response.GetResponseStream())
                 {
-                    using (FileStream fs = new FileStream(localPath, FileMode.Create, FileAccess.Write))
+                    using (FileStream fs = File.Open(localPath, FileMode.Create, FileAccess.Write))
                     {
                         byte[] content = new byte[4096];
                         int bytesRead = 0;

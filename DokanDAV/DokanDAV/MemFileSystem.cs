@@ -228,8 +228,7 @@ namespace DokanDAV
 
             file = Lookup(webFilename);
 
-            lock (file.WriteLock)
-            {
+            
                 using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
                 {
 
@@ -242,24 +241,22 @@ namespace DokanDAV
                     file.Length = fs.Length;
                     file.LocallyModified = true;
                 }
-            }
+            
 
         }
 
         public void ReadFile(string webFilename, byte[] buffer, ref uint readBytes, long offset)
         {
             string localFilename = LocalFilename(webFilename);
-            MemFile file = Lookup(webFilename);
 
-            lock (file.WriteLock)
-            {
+            
                 using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
                 {
                     fs.Seek(offset, SeekOrigin.Begin);
                     fs.Read(buffer, 0, buffer.Length);
                     readBytes = (uint)buffer.Length;
                 }
-            }
+            
 
 
         }
