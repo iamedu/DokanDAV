@@ -187,6 +187,14 @@ namespace DokanDAV
 
             file.LocallyModified = false;
 
+            if (file.LastAccessed.AddMilliseconds(CacheMillis) < DateTime.Now)
+            {
+                if(File.Exists(memfs.LocalFilename(webFilename)))
+                {
+                    File.Delete(memfs.LocalFilename(webFilename));
+                }
+            }
+
             return 0;
         }
 
@@ -266,6 +274,13 @@ namespace DokanDAV
                     return -DokanNet.ERROR_PATH_NOT_FOUND;
                 }
                 return -DokanNet.ERROR_PATH_NOT_FOUND;
+            }
+
+            MemFile parent = memfs.Lookup(webFilename);
+
+            if (parent.LastAccessed.AddMilliseconds(CacheMillis) < DateTime.Now)
+            {
+                FillList(webFilename);
             }
 
             ICollection<MemFile> memFiles = memfs.List(webFilename);
@@ -474,7 +489,7 @@ namespace DokanDAV
             }
             catch(Exception ex)
             {
-                Debug.WriteLine(ex);
+                Console.WriteLine(ex);
                 return -1;
             }
             

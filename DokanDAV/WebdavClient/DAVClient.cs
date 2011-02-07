@@ -57,13 +57,13 @@ namespace WebdavClient
         {
             Uri uri = buildUri(path);
             int status;
-            string method = WebRequestMethods.Http.MkCol;
+           
             WebRequest request = HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "MKCOL";
 
             using (response = (HttpWebResponse)request.GetResponse())
             {
@@ -215,7 +215,6 @@ namespace WebdavClient
         {
             FileInfo fileInfo = new FileInfo(localPath);
             Uri uploadUri = buildUri(remotePath);
-            string method = WebRequestMethods.Http.Put.ToString();
 
             int status;
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
@@ -223,9 +222,10 @@ namespace WebdavClient
             Stream stream;
 
             NetworkCredential credentials = new NetworkCredential(username, password);
+
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "PUT";
             request.ContentLength = fileInfo.Length;
 
             using (stream = request.GetRequestStream())
@@ -253,13 +253,12 @@ namespace WebdavClient
         public bool Download(String localPath, String remotePath)
         {
             Uri downloadUri = buildUri(remotePath);
-            string method = WebRequestMethods.Http.Get.ToString();
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(downloadUri);
 
             NetworkCredential credentials = new NetworkCredential(username, password);
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "GET";
 
             int status;
 
@@ -337,13 +336,13 @@ namespace WebdavClient
         {
             int status;
             Uri uri = buildUri(path);
-            string method = WebRequestMethods.Http.Head;
+
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "HEAD";
 
             try
             {
@@ -365,13 +364,13 @@ namespace WebdavClient
         {
             int result;
             Uri uri = buildUri(path);
-            string method = WebRequestMethods.Http.Head;
+
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "HEAD";
 
 
             using (response = (HttpWebResponse)request.GetResponse())
@@ -394,13 +393,13 @@ namespace WebdavClient
             DAVType result;
             int status;
             Uri uri = buildUri(path);
-            string method = WebRequestMethods.Http.Head;
+
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
             request.Credentials = credentials;
             request.PreAuthenticate = true;
-            request.Method = method;
+            request.Method = "HEAD";
 
 
             using (response = (HttpWebResponse)request.GetResponse())
