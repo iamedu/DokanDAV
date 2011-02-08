@@ -7,3 +7,10 @@ C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\GenerateResourc
 C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.exe
 C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\RacsaFS.exe.config
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\DokanDAV.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\WebdavClient.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\DokanNet.dll
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\DokanDAV.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\WebdavClient.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\DokanNet.pdb

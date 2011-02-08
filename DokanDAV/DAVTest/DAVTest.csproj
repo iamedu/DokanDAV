@@ -75,6 +75,10 @@
       <Project>{25A74167-D27C-4A07-A4D1-3BD5DDC4B5B3}</Project>
       <Name>DokanDAV</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebdavClient\WebdavClient.csproj">
+      <Project>{4F50A8E4-F707-416F-8879-D9A163A85689}</Project>
+      <Name>WebdavClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

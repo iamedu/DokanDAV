@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:tns="http://jnstorage" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://jnstorage" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://jnstorage">
+      <xsd:element name="getTotalSpace">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="in0" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTotalSpaceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="out" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsedSpace">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="in0" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsedSpaceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="out" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getBasePath">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="in0" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="in1" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getBasePathResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="out" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getUsedSpaceResponse">
+    <wsdl:part name="parameters" element="tns:getUsedSpaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBasePathRequest">
+    <wsdl:part name="parameters" element="tns:getBasePath" />
+  </wsdl:message>
+  <wsdl:message name="getTotalSpaceResponse">
+    <wsdl:part name="parameters" element="tns:getTotalSpaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBasePathResponse">
+    <wsdl:part name="parameters" element="tns:getBasePathResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUsedSpaceRequest">
+    <wsdl:part name="parameters" element="tns:getUsedSpace" />
+  </wsdl:message>
+  <wsdl:message name="getTotalSpaceRequest">
+    <wsdl:part name="parameters" element="tns:getTotalSpace" />
+  </wsdl:message>
+  <wsdl:portType name="DAV">
+    <wsdl:operation name="getTotalSpace">
+      <wsdl:input name="getTotalSpaceRequest" message="tns:getTotalSpaceRequest" />
+      <wsdl:output name="getTotalSpaceResponse" message="tns:getTotalSpaceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getUsedSpace">
+      <wsdl:input name="getUsedSpaceRequest" message="tns:getUsedSpaceRequest" />
+      <wsdl:output name="getUsedSpaceResponse" message="tns:getUsedSpaceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getBasePath">
+      <wsdl:input name="getBasePathRequest" message="tns:getBasePathRequest" />
+      <wsdl:output name="getBasePathResponse" message="tns:getBasePathResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DAVHttpBinding" type="tns:DAV">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getTotalSpace">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getTotalSpaceRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getTotalSpaceResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUsedSpace">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getUsedSpaceRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getUsedSpaceResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBasePath">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getBasePathRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getBasePathResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DAV">
+    <wsdl:port name="DAVHttpPort" binding="tns:DAVHttpBinding">
+      <wsdlsoap:address location="http://localhost:8080/jnstorage/services/DAV" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

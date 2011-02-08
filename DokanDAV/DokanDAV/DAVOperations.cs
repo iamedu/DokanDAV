@@ -11,28 +11,46 @@ using WebdavClient;
 
 namespace DokanDAV
 {
+    public struct DAVSize {
+        public ulong used;
+        public ulong total;
+    }
+
     public class DAVOperations : DokanOperations
     {
         private MemFileSystem memfs;
         private DAVClient client;
+        private string username;
+        private string password;
 
         public long CacheMillis { get; set; }
 
-        public DAVOperations()
+        private Func<string, DAVSize> sizeFunc;
+
+        public DAVOperations(DAVProtocol protocol,
+                             String host,
+                             int port,
+                             String basePath,
+                             String username,
+                             String password,
+                             Func<string, DAVSize> sizeFunc)
         {
             string userHome = Environment.GetEnvironmentVariable("USERPROFILE");
             memfs = new MemFileSystem(userHome + "\\.davfs\\");
 
-            client = new WebdavClient.DAVClient(WebdavClient.DAVProtocol.HTTP,
-                                                "localhost",
-                                                8080,
-                                                "/repository/default",
-                                                "admin",
-                                                "admin");
+            client = new WebdavClient.DAVClient(protocol,
+                                                host,
+                                                port,
+                                                basePath,
+                                                username,
+                                                password);
 
             CacheMillis = 30 * 1000;
-
             FillList("/");
+
+            this.username = username;
+            this.password = password;
+            this.sizeFunc = sizeFunc;
 
             Console.WriteLine("This is a beautiful day");
         }
@@ -317,9 +335,26 @@ namespace DokanDAV
 
         public int GetDiskFreeSpace(ref ulong freeBytesAvailable, ref ulong totalBytes, ref ulong totalFreeBytes, DokanFileInfo info)
         {
-            freeBytesAvailable = 512 * 1024 * 1024;
-            totalBytes = 1024 * 1024 * 1024;
-            totalFreeBytes = 512 * 1024 * 1024;
+            ulong usedBytes;
+
+            DAVSize size;
+
+            if (sizeFunc != null)
+            {
+                size = sizeFunc(username);
+                totalBytes = size.total;
+                usedBytes = size.used;
+                freeBytesAvailable = (totalBytes - usedBytes);
+                totalFreeBytes = (totalBytes - usedBytes);
+            }
+            else
+            {
+                freeBytesAvailable = 512 * 1024 * 1024;
+                totalBytes = 1024 * 1024 * 1024;
+                totalFreeBytes = 512 * 1024 * 1024;
+            }
+
+
             return 0;
         }
 

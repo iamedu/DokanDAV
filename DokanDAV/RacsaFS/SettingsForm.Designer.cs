@@ -76,10 +76,18 @@
             // driveCombo
             // 
             this.driveCombo.FormattingEnabled = true;
-            this.driveCombo.Location = new System.Drawing.Point(68, 85);
+            this.driveCombo.Items.AddRange(new object[] {
+            "M:\\",
+            "N:\\",
+            "O:\\",
+            "P:\\",
+            "Q:\\",
+            "R:\\"});
+            this.driveCombo.Location = new System.Drawing.Point(72, 85);
             this.driveCombo.Name = "driveCombo";
-            this.driveCombo.Size = new System.Drawing.Size(121, 21);
+            this.driveCombo.Size = new System.Drawing.Size(117, 21);
             this.driveCombo.TabIndex = 3;
+            this.driveCombo.Text = "N:\\";
             // 
             // userTxt
             // 
@@ -104,6 +112,7 @@
             this.mountButton.TabIndex = 6;
             this.mountButton.Text = "Mount";
             this.mountButton.UseVisualStyleBackColor = true;
+            this.mountButton.Click += new System.EventHandler(this.mountButton_Click);
             // 
             // SettingsForm
             // 
@@ -117,8 +126,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.usernameLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsForm";
             this.Text = "Settings";
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

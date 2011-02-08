@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokanDAV", "DokanDAV\DokanDAV.csproj", "{25A74167-D27C-4A07-A4D1-3BD5DDC4B5B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebdavClient", "WebdavClient\WebdavClient.csproj", "{4F50A8E4-F707-416F-8879-D9A163A85689}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAVTest", "DAVTest\DAVTest.csproj", "{75E7C5FC-F171-49C4-9595-129896E176C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RacsaFS", "RacsaFS\RacsaFS.csproj", "{1B4FDEEB-2CA9-46DF-A932-F3FF2F0D8974}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RacsaAV", "RacsaAV\RacsaAV.vdproj", "{0A69E05E-783A-43A4-8593-2CB843900FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{1B4FDEEB-2CA9-46DF-A932-F3FF2F0D8974}.Release|Any CPU.ActiveCfg = Release|x86
 		{1B4FDEEB-2CA9-46DF-A932-F3FF2F0D8974}.Release|x86.ActiveCfg = Release|x86
 		{1B4FDEEB-2CA9-46DF-A932-F3FF2F0D8974}.Release|x86.Build.0 = Release|x86
+		{0A69E05E-783A-43A4-8593-2CB843900FB9}.Debug|Any CPU.ActiveCfg = Debug
+		{0A69E05E-783A-43A4-8593-2CB843900FB9}.Debug|x86.ActiveCfg = Debug
+		{0A69E05E-783A-43A4-8593-2CB843900FB9}.Release|Any CPU.ActiveCfg = Release
+		{0A69E05E-783A-43A4-8593-2CB843900FB9}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

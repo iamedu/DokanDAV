@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 using Dokan;
 using DokanDAV;
+using WebdavClient;
 
 namespace DAVTest
 {
@@ -20,7 +21,12 @@ namespace DAVTest
             opt.DebugMode = true;
             opt.VolumeLabel = "DDV";
 
-            int status = DokanNet.DokanMain(opt, new DAVOperations());
+            int status = DokanNet.DokanMain(opt, new DAVOperations(DAVProtocol.HTTP,
+                                                "localhost",
+                                                8080,
+                                                "/repository/default",
+                                                "admin",
+                                                "admin", null));
 
             switch (status)
             {
