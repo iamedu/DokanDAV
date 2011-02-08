@@ -39,6 +39,9 @@ namespace RacsaFS
             userTxt.Text = settings.Username;
             passwordTxt.Text = settings.Password;
             driveCombo.Text = settings.Mount;
+
+            Connect();
+
         }
 
         private void mountButton_Click(object sender, EventArgs e)
@@ -48,6 +51,25 @@ namespace RacsaFS
             settings.Mount = driveCombo.Text;
         }
 
+        private void Connect()
+        {
+            string basePath;
+
+            MessageBox.Show(settings.Webservice);
+
+            using (AVService.DAVClient client = new AVService.DAVClient("DAVHttpPort", settings.Webservice))
+            {
+                basePath = settings.Base + client.getBasePath("iamedu", "iamedu");
+            }
+
+            DokanDAV.DAVOperations operations = new DokanDAV.DAVOperations(WebdavClient.DAVProtocol.HTTP,
+                                                                           settings.Hostname,
+                                                                           settings.Port,
+                                                                           basePath,
+                                                                           settings.Username,
+                                                                           settings.Password,
+                                                                           sizeFunc);
+        }
         
     }
 }
