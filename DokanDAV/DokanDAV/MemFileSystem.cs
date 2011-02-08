@@ -16,6 +16,7 @@ namespace DokanDAV
     public class MemFileSystem
     {
         private MemFile root;
+        private readonly object _locker = new object();
 
         public string BasePath { get; private set; }
 
@@ -228,7 +229,8 @@ namespace DokanDAV
 
             file = Lookup(webFilename);
 
-            
+            lock (_locker)
+            {
                 using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
                 {
 
@@ -241,6 +243,7 @@ namespace DokanDAV
                     file.Length = fs.Length;
                     file.LocallyModified = true;
                 }
+            }
             
 
         }
@@ -249,13 +252,15 @@ namespace DokanDAV
         {
             string localFilename = LocalFilename(webFilename);
 
-            
+            lock (_locker)
+            {
                 using (FileStream fs = File.Open(localFilename, FileMode.Open, FileAccess.Read))
                 {
                     fs.Seek(offset, SeekOrigin.Begin);
                     fs.Read(buffer, 0, buffer.Length);
                     readBytes = (uint)buffer.Length;
                 }
+            }
             
 
 
@@ -280,9 +285,12 @@ namespace DokanDAV
         public void SetEndOfFile(string webFilename, long length)
         {
             string localFilename = LocalFilename(webFilename);
-            using(FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+            lock (_locker)
             {
-                fs.SetLength(length);
+                using (FileStream fs = File.Open(localFilename, FileMode.OpenOrCreate, FileAccess.Write))
+                {
+                    fs.SetLength(length);
+                }
             }
         }
     }

@@ -1,0 +1,9 @@
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\RacsaFS.exe
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\bin\Debug\RacsaFS.pdb
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.Properties.Resources.resources
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.SettingsForm.resources
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.exe
+C:\Users\iamedu\Projects\DokanDAV\DokanDAV\RacsaFS\obj\x86\Debug\RacsaFS.pdb
