@@ -14,26 +14,36 @@ using DokanDAV;
 
 namespace RacsaFS
 {
+
     public partial class SettingsForm : Form
     {
         private Settings settings;
         private Func<string, DokanDAV.DAVSize> sizeFunc;
         private DAVOperations operations;
+        private bool mounted;
 
         public SettingsForm()
         {
             InitializeComponent();
             settings = new Settings();
-
+            mounted = false;
 
             sizeFunc = delegate(string username)
             {
                 DokanDAV.DAVSize size = new DokanDAV.DAVSize();
 
-                using (AVService.DAVClient client = new AVService.DAVClient())
+                try
                 {
-                    size.total = (ulong)client.getTotalSpace(username);
-                    size.used = (ulong)client.getUsedSpace(username);
+
+                    using (AVService.DAVClient client = new AVService.DAVClient())
+                    {
+                        size.total = (ulong)client.getTotalSpace(username);
+                        size.used = (ulong)client.getUsedSpace(username);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
 
                 return size;
@@ -49,17 +59,16 @@ namespace RacsaFS
 
         private void mountButton_Click(object sender, EventArgs e)
         {
+            DokanNet.DokanUnmount(settings.Mount[0]);
             settings.Username = userTxt.Text;
             settings.Password = passwordTxt.Text;
             settings.Mount = driveCombo.Text;
+            this.Hide();
 
-            if (Connect())
+            if (!Connect())
             {
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("Ocurrio un error, por favor revise sus datos");
+                this.Show();
+                MessageBox.Show("Ocurrió un error, por favor revise sus datos");
             }
 
         }
@@ -72,30 +81,63 @@ namespace RacsaFS
             options.VolumeLabel = "AV de " + settings.Username;
             options.DebugMode = true;
 
+            notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+            notifyIcon.BalloonTipTitle = "Montando AV";
+            notifyIcon.BalloonTipText = "Montando AV en " + options.MountPoint;
+            notifyIcon.ShowBalloonTip(3000);
+
+            mounted = true;
+            mountToolStripMenuItem.Text = "Desmontar";
+
             int status = DokanNet.DokanMain(options, operations);
+
+            mountToolStripMenuItem.Text = "Montar";
+
+            mounted = false;
 
             switch (status)
             {
                 case DokanNet.DOKAN_DRIVE_LETTER_ERROR:
-                    MessageBox.Show("Drive incorrecto");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error de letra de drive";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 case DokanNet.DOKAN_DRIVER_INSTALL_ERROR:
-                    MessageBox.Show("Error al instalar el drive");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error al instalar el drive";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 case DokanNet.DOKAN_MOUNT_ERROR:
-                    MessageBox.Show("Error al montar el drive");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error al tratar de montar su disco";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 case DokanNet.DOKAN_START_ERROR:
-                    MessageBox.Show("Error al iniciar el drive");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error al inicializar el disco AV";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 case DokanNet.DOKAN_ERROR:
-                    MessageBox.Show("Error desconocido");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error desconocido";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 case DokanNet.DOKAN_SUCCESS:
-                    MessageBox.Show("Ha desmontado su AV");
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    notifyIcon.BalloonTipTitle = "Disco desmontado";
+                    notifyIcon.BalloonTipText = "El drive de AV ha sido desmontado";
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
                 default:
-                    MessageBox.Show("Status desconocido " + status);
+                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    notifyIcon.BalloonTipTitle = "Error al montar AV";
+                    notifyIcon.BalloonTipText = "Error desconocido, status: " + status;
+                    notifyIcon.ShowBalloonTip(3000);
                     break;
             }
 
@@ -120,7 +162,7 @@ namespace RacsaFS
             operations = new DokanDAV.DAVOperations(WebdavClient.DAVProtocol.HTTP,
                                                                            settings.Hostname,
                                                                            settings.Port,
-                                                                           basePath,
+                                                                           basePath + "/" + settings.Username,
                                                                            settings.Username,
                                                                            settings.Password,
                                                                            sizeFunc);
@@ -131,6 +173,40 @@ namespace RacsaFS
             
 
             return true;
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DokanNet.DokanUnmount(settings.Mount[0]);
+            Application.Exit();
+        }
+
+        private void desmontarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (mounted)
+            {
+                DokanNet.DokanUnmount(settings.Mount[0]);
+                mounted = false;
+            }
+            else
+            {
+                this.Hide();
+                if (!Connect())
+                {
+                    this.Show();
+                    MessageBox.Show("Ocurrió un error, por favor revise sus datos");
+                }
+            }
+        }
+
+        private void configuraciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DokanNet.DokanUnmount(settings.Mount[0]);
         }
         
     }

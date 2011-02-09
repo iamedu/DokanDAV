@@ -96,8 +96,9 @@ namespace DokanDAV
                     return -DokanNet.ERROR_ACCESS_DENIED;
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex);
                 return -1;
             }
 
@@ -353,7 +354,6 @@ namespace DokanDAV
                 totalBytes = 1024 * 1024 * 1024;
                 totalFreeBytes = 512 * 1024 * 1024;
             }
-
 
             return 0;
         }

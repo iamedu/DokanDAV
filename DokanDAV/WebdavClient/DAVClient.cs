@@ -57,7 +57,9 @@ namespace WebdavClient
         {
             Uri uri = buildUri(path);
             int status;
-           
+
+            Console.WriteLine(uri);
+
             WebRequest request = HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
