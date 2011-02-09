@@ -7,12 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using System.Threading;
+using Dokan;
+
+using DokanDAV;
+
 namespace RacsaFS
 {
     public partial class SettingsForm : Form
     {
         private Settings settings;
         private Func<string, DokanDAV.DAVSize> sizeFunc;
+        private DAVOperations operations;
 
         public SettingsForm()
         {
@@ -24,7 +30,7 @@ namespace RacsaFS
             {
                 DokanDAV.DAVSize size = new DokanDAV.DAVSize();
 
-                using (AVService.DAVClient client = new AVService.DAVClient("DAV", settings.Webservice))
+                using (AVService.DAVClient client = new AVService.DAVClient())
                 {
                     size.total = (ulong)client.getTotalSpace(username);
                     size.used = (ulong)client.getUsedSpace(username);
@@ -39,9 +45,6 @@ namespace RacsaFS
             userTxt.Text = settings.Username;
             passwordTxt.Text = settings.Password;
             driveCombo.Text = settings.Mount;
-
-            Connect();
-
         }
 
         private void mountButton_Click(object sender, EventArgs e)
@@ -49,26 +52,85 @@ namespace RacsaFS
             settings.Username = userTxt.Text;
             settings.Password = passwordTxt.Text;
             settings.Mount = driveCombo.Text;
+
+            if (Connect())
+            {
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error, por favor revise sus datos");
+            }
+
         }
 
-        private void Connect()
+        private void StartDAV()
+        {
+            Dokan.DokanOptions options = new DokanOptions();
+
+            options.MountPoint = settings.Mount;
+            options.VolumeLabel = "AV de " + settings.Username;
+            options.DebugMode = true;
+
+            int status = DokanNet.DokanMain(options, operations);
+
+            switch (status)
+            {
+                case DokanNet.DOKAN_DRIVE_LETTER_ERROR:
+                    MessageBox.Show("Drive incorrecto");
+                    break;
+                case DokanNet.DOKAN_DRIVER_INSTALL_ERROR:
+                    MessageBox.Show("Error al instalar el drive");
+                    break;
+                case DokanNet.DOKAN_MOUNT_ERROR:
+                    MessageBox.Show("Error al montar el drive");
+                    break;
+                case DokanNet.DOKAN_START_ERROR:
+                    MessageBox.Show("Error al iniciar el drive");
+                    break;
+                case DokanNet.DOKAN_ERROR:
+                    MessageBox.Show("Error desconocido");
+                    break;
+                case DokanNet.DOKAN_SUCCESS:
+                    MessageBox.Show("Ha desmontado su AV");
+                    break;
+                default:
+                    MessageBox.Show("Status desconocido " + status);
+                    break;
+            }
+
+        }
+
+        private bool Connect()
         {
             string basePath;
 
-            MessageBox.Show(settings.Webservice);
+            
 
-            using (AVService.DAVClient client = new AVService.DAVClient("DAVHttpPort", settings.Webservice))
+            using (AVService.DAVClient client = new AVService.DAVClient())
             {
-                basePath = settings.Base + client.getBasePath("iamedu", "iamedu");
+                basePath = client.getBasePath(settings.Username, settings.Password);
+                if (basePath == null)
+                {
+                    return false;
+                }
+                basePath = settings.Base + basePath;
             }
 
-            DokanDAV.DAVOperations operations = new DokanDAV.DAVOperations(WebdavClient.DAVProtocol.HTTP,
+            operations = new DokanDAV.DAVOperations(WebdavClient.DAVProtocol.HTTP,
                                                                            settings.Hostname,
                                                                            settings.Port,
                                                                            basePath,
                                                                            settings.Username,
                                                                            settings.Password,
                                                                            sizeFunc);
+            Thread t = new Thread(new ThreadStart(StartDAV));
+
+
+            t.Start();
+            
+
+            return true;
         }
         
     }
