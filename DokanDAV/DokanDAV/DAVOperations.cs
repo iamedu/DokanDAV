@@ -206,11 +206,15 @@ namespace DokanDAV
                     return -1;
             }
 
+            Console.WriteLine("Opened " + webFilename + " " + access + " about to lock");
 
             if (!file.TryLock())
             {
+                Console.WriteLine("NOT NOT NOT " + webFilename + " " + access + " about to lock");
                 return DokanNet.ERROR_SHARING_VIOLATION;
             }
+
+
 
             file.LocallyModified = false;
 
@@ -481,8 +485,17 @@ namespace DokanDAV
 
         public int SetAllocationSize(string filename, long length, DokanFileInfo info)
         {
-            Debug.WriteLine("SetAllocationSize " + filename);
-            return -1;
+            string webFilename = Normalize(filename);
+            try
+            {
+                memfs.SetEndOfFile(webFilename, length);
+            }
+            catch
+            {
+                return -1;
+            }
+
+            return 0;
         }
 
         public int SetEndOfFile(string filename, long length, DokanFileInfo info)
