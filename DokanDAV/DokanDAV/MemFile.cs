@@ -20,6 +20,7 @@ namespace DokanDAV
 
     public class MemFile : IDictionary<string, MemFile>
     {
+        public bool Listed {get; set; }
         private Dictionary<string, MemFile> files;
         public string Name { get; private set; }
         public string AbsolutePath { get; set; }
@@ -80,6 +81,7 @@ namespace DokanDAV
                 if (Type == DAVType.Folder && key.Length > 0)
                 {
                     value.Name = key;
+                    value.Listed = false;
                     files[key] = value;
                 }
             }

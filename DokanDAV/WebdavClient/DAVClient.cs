@@ -151,15 +151,6 @@ namespace WebdavClient
                                 finfo.DateCreated = DateTime.Parse(GetNodeText(xmlNsManager, node, "d:propstat/d:prop/d:creationdate"));
                                 finfo.LastModified = DateTime.Parse(GetNodeText(xmlNsManager, node, "d:propstat/d:prop/d:getlastmodified"));
 
-                                try
-                                {
-                                    finfo.Length = int.Parse(GetNodeText(xmlNsManager, node, "d:propstat/d:prop/d:getcontentlength"));
-                                }
-                                catch
-                                {
-                                    finfo.Length = 0;
-                                }
-                                
                                 if (GetNodeText(xmlNsManager, node, "d:propstat/d:prop/d:iscollection").Equals("1"))
                                 {
                                     finfo.Type = DAVType.Folder;
@@ -168,6 +159,20 @@ namespace WebdavClient
                                 {
                                     finfo.Type = DAVType.File;
                                 }
+
+                                if (finfo.Type == DAVType.File)
+                                {
+                                    try
+                                    {
+                                        finfo.Length = int.Parse(GetNodeText(xmlNsManager, node, "d:propstat/d:prop/d:getcontentlength"));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex);
+                                        finfo.Length = 0;
+                                    }
+                                }
+
                                 result.Add(finfo);
                             }
                         }
@@ -175,8 +180,9 @@ namespace WebdavClient
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex);
                 return null;
             }
 

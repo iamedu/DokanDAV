@@ -66,6 +66,8 @@ namespace DokanDAV
             string webFilename = Normalize(filename);
             string localFilename = memfs.LocalFilename(webFilename);
 
+            Console.WriteLine("Close " + webFilename);
+
             MemFile file = memfs.Lookup(webFilename);
 
             if (file != null)
@@ -87,6 +89,10 @@ namespace DokanDAV
 
             try
             {
+                if (memfs.Exists(webFilename))
+                {
+                    return -DokanNet.ERROR_FILE_EXISTS;
+                }
                 if (client.CreateFolder(webFilename))
                 {
                     memfs.CreateDirectory(webFilename);
@@ -112,6 +118,8 @@ namespace DokanDAV
         public int CreateFile(string filename, System.IO.FileAccess access, System.IO.FileShare share, System.IO.FileMode mode, System.IO.FileOptions options, DokanFileInfo info)
         {
             string webFilename = Normalize(filename);
+
+            Console.WriteLine("Open " + webFilename + " " + access);
 
             MemFileContext context = new MemFileContext();
             MemFile file;
@@ -278,7 +286,6 @@ namespace DokanDAV
 
             if (!memfs.Exists(webFilename))
             {
-
                 //Need to improve this, if it wasn't found check in the internet
                 try
                 {
@@ -296,6 +303,11 @@ namespace DokanDAV
             }
 
             MemFile parent = memfs.Lookup(webFilename);
+
+            if (!parent.Listed)
+            {
+                FillList(webFilename);
+            }
 
             if (parent.LastAccessed.AddMilliseconds(CacheMillis) < DateTime.Now)
             {
@@ -547,11 +559,12 @@ namespace DokanDAV
                 memFile.DateCreated = info.DateCreated;
                 memFile.LastUpdated = info.LastModified;
                 memFile.LastAccessed = DateTime.Now;
-
                 memFile.Type = info.Type;
 
                 parent[info.Name] = memFile;
             }
+
+            parent.Listed = true;
 
         }
 

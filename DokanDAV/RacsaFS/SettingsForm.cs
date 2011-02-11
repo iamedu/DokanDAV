@@ -201,12 +201,19 @@ namespace RacsaFS
 
         private void configuraciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            WindowState = FormWindowState.Normal;
             this.Show();
         }
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             DokanNet.DokanUnmount(settings.Mount[0]);
+        }
+
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+            this.Show();
         }
         
     }
