@@ -58,8 +58,6 @@ namespace WebdavClient
             Uri uri = buildUri(path);
             int status;
 
-            Console.WriteLine(uri);
-
             WebRequest request = HttpWebRequest.Create(uri);
             HttpWebResponse response;
             NetworkCredential credentials = new NetworkCredential(username, password);
@@ -99,6 +97,8 @@ namespace WebdavClient
             request.PreAuthenticate = true;
             request.Method = method;
             request.ContentType = "text/xml";
+
+
 
             StringBuilder propfind = new StringBuilder();
             propfind.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
@@ -183,7 +183,7 @@ namespace WebdavClient
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
-                return null;
+                return new List<DAVFileInfo>();
             }
 
             return result;

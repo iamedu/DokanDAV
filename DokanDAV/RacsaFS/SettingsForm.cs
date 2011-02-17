@@ -55,6 +55,21 @@ namespace RacsaFS
             userTxt.Text = settings.Username;
             passwordTxt.Text = settings.Password;
             driveCombo.Text = settings.Mount;
+
+            try
+            {
+                if (!Connect())
+                {
+                    WindowState = FormWindowState.Normal;
+                    this.Show();
+                }
+            }
+            catch
+            {
+                WindowState = FormWindowState.Normal;
+                this.Show();
+            }
+
         }
 
         private void mountButton_Click(object sender, EventArgs e)
@@ -177,7 +192,15 @@ namespace RacsaFS
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DokanNet.DokanUnmount(settings.Mount[0]);
+            try
+            {
+                DokanNet.DokanUnmount(settings.Mount[0]);
+            }
+            catch
+            {
+                Console.WriteLine("Drive not mounted");
+            }
+
             Application.Exit();
         }
 
@@ -205,15 +228,17 @@ namespace RacsaFS
             this.Show();
         }
 
-        private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            DokanNet.DokanUnmount(settings.Mount[0]);
-        }
 
-        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             WindowState = FormWindowState.Normal;
             this.Show();
+        }
+
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
         }
         
     }

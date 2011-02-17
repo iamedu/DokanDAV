@@ -38,6 +38,7 @@ namespace DokanDAV
             string userHome = Environment.GetEnvironmentVariable("USERPROFILE");
             memfs = new MemFileSystem(userHome + "\\.davfs\\");
 
+
             client = new WebdavClient.DAVClient(protocol,
                                                 host,
                                                 port,

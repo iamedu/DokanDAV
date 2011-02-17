@@ -4,9 +4,9 @@
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
 "ProjectName" = "8:RacsaAV"
-"LanguageId" = "3:3082"
+"LanguageId" = "3:1033"
 "CodePage" = "3:1252"
-"UILanguageId" = "3:3082"
+"UILanguageId" = "3:1033"
 "SccProjectName" = "8:"
 "SccLocalPath" = "8:"
 "SccAuxPath" = "8:"
@@ -17,6 +17,12 @@
         {
         "MsmKey" = "8:_19EAE86F0CCA0ABDF8B16E67930DB3F3"
         "OwnerKey" = "8:_236A098A5EA5468BB6F23E31151834FB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_19EAE86F0CCA0ABDF8B16E67930DB3F3"
+        "OwnerKey" = "8:_F2968A7ACF1547A2965FF621105852DB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -34,6 +40,12 @@
         "Entry"
         {
         "MsmKey" = "8:_236A098A5EA5468BB6F23E31151834FB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2BD2DC873B32476CA3B22A1FC64FB242"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -58,6 +70,12 @@
         "Entry"
         {
         "MsmKey" = "8:_BB8242CBEE787B4CD904934E9B0994DE"
+        "OwnerKey" = "8:_F2968A7ACF1547A2965FF621105852DB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BB8242CBEE787B4CD904934E9B0994DE"
         "OwnerKey" = "8:_CCA5D1815B13253DB1E792AB7D7518C1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -75,6 +93,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CCA5D1815B13253DB1E792AB7D7518C1"
+        "OwnerKey" = "8:_F2968A7ACF1547A2965FF621105852DB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EE73F6C8562E4E8A8248F5960105FC49"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -88,7 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BB8242CBEE787B4CD904934E9B0994DE"
+        "OwnerKey" = "8:_236A098A5EA5468BB6F23E31151834FB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -118,13 +142,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_236A098A5EA5468BB6F23E31151834FB"
+        "OwnerKey" = "8:_19EAE86F0CCA0ABDF8B16E67930DB3F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_19EAE86F0CCA0ABDF8B16E67930DB3F3"
+        "OwnerKey" = "8:_BB8242CBEE787B4CD904934E9B0994DE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -145,6 +169,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -161,6 +206,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -182,7 +248,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -219,6 +285,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2BD2DC873B32476CA3B22A1FC64FB242"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\DokanInstall_0.6.0.exe"
+            "TargetName" = "8:DokanInstall_0.6.0.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_909185CCE07042868564C37250ADF80F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BB8242CBEE787B4CD904934E9B0994DE"
@@ -343,16 +429,42 @@
                 {
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_B7F9491E194041349B35B89CF9BB17BE"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
+                "Folders"
+                {
+                }
+            }
         }
         "LaunchCondition"
         {
+            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_43684868227D4B5CBFD2257074C94068"
+            {
+            "Name" = "8:Dokan"
+            "Condition" = "8:REGISTRYDOKAN1<>\"\""
+            "Message" = "8:Para continuar con la instalación necesita tener dokan instalado, ¿lo desea instalar ahora? Al finalizar la instalación deberá de volver a ejecutar el instalaor"
+            "InstallUrl" = "8:http://test-ddv1.racsa.co.cr/DokanInstall_0.6.0.exe"
+            }
         }
         "Locator"
         {
+            "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_FE499851C23D4EE7861F7D94B064687F"
+            {
+            "Name" = "8:Search for Dokan"
+            "Root" = "2:1"
+            "RegKey" = "8:SYSTEM\\ControlSet001\\Services\\Dokan"
+            "Value" = "8:DisplayName"
+            "Property" = "8:REGISTRYDOKAN1"
+            }
         }
         "MsiBootstrapper"
         {
-        "LangId" = "3:3082"
+        "LangId" = "3:1033"
         "RequiresElevation" = "11:FALSE"
         }
         "Product"
@@ -360,7 +472,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Racsa AV"
         "ProductCode" = "8:{3AE38170-E2D2-464A-A466-78AEA1D4B835}"
-        "PackageCode" = "8:{199030C3-25F0-4020-AD41-82061109F4D8}"
+        "PackageCode" = "8:{4613C001-1EBB-403E-B122-5FA3EEFCF0BF}"
         "UpgradeCode" = "8:{121CA444-F338-4FEB-AEAE-6CBCFD6BACD3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -478,7 +590,7 @@
                                             "Condition" = "8:"
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:1"
-                                            "Value" = "8:localhost"
+                                            "Value" = "8:test-ddv1"
                                             }
                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_5BA5DEEC73D94C7188E0647422E56B57"
                                             {
@@ -502,7 +614,7 @@
                                             "Condition" = "8:"
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:1"
-                                            "Value" = "8:/jnstorage"
+                                            "Value" = "8:/DDV"
                                             }
                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_E19E67931481476DBBC5B0D31A6C0248"
                                             {

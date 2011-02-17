@@ -16,6 +16,24 @@ namespace DAVTest
 
         public static void Main()
         {
+            DAVClient client = new DAVClient(DAVProtocol.HTTP, "test-ddv1.racsa.co.cr", 80, "/DDV/webdav/repo1/java", "iamedu", "iamedu");
+            /*
+            List<DAVFileInfo> list = client.List("/");
+
+            foreach(DAVFileInfo info in list) {
+                Console.WriteLine(info.Name);
+            }
+             */
+
+            client.CreateFolder("/iamedu/muerete");
+
+
+
+            Console.WriteLine("Finished everything");
+
+            Console.Read();
+
+            /*
             DokanOptions opt = new DokanOptions();
             opt.MountPoint = "n:\\";
             opt.DebugMode = true;
@@ -53,6 +71,7 @@ namespace DAVTest
                     Debug.WriteLine("Unknown status: %d", status);
                     break;
             }
+             */ 
         }
 
     }

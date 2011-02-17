@@ -18,10 +18,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8080/jnstorage/services/DAV?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://test-ddv1.racsa.co.cr/DDV/services/DAV?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DAV.wsdl" MetadataType="Wsdl" ID="a5f3404f-d86b-41c2-84c8-aec0845ca358" SourceId="1" SourceUrl="http://localhost:8080/jnstorage/services/DAV?wsdl" />
+    <MetadataFile FileName="DAV.wsdl" MetadataType="Wsdl" ID="b9fd2089-c91c-41f5-bdc9-a1d7832b20cf" SourceId="1" SourceUrl="http://test-ddv1.racsa.co.cr/DDV/services/DAV?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

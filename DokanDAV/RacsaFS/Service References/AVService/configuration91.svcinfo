@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="EhubaPGF1+utAQmsjW4M6Nzbb20=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="sxoxNz7TzWLgVt8tmfjhweTszhQ=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="DAVHttpBinding">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="DAVHttpPort" contract="AVService.DAV" bindingType="basicHttpBinding" address="http://localhost:8080/jnstorage/services/DAV" bindingConfiguration="DAVHttpBinding">
+    <endpoint name="DAVHttpPort" contract="AVService.DAV" bindingType="basicHttpBinding" address="http://test-ddv1.racsa.co.cr/DDV/services/DAV" bindingConfiguration="DAVHttpBinding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8080/jnstorage/services/DAV</serializedValue>
+          <serializedValue>http://test-ddv1.racsa.co.cr/DDV/services/DAV</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
