@@ -74,18 +74,49 @@ namespace RacsaFS
 
         private void mountButton_Click(object sender, EventArgs e)
         {
-            DokanNet.DokanUnmount(settings.Mount[0]);
-            settings.Username = userTxt.Text;
-            settings.Password = passwordTxt.Text;
-            settings.Mount = driveCombo.Text;
-            this.Hide();
-
-            if (!Connect())
+            if (!mounted)
             {
-                this.Show();
-                MessageBox.Show("Ocurrió un error, por favor revise sus datos");
+                DokanNet.DokanUnmount(settings.Mount[0]);
+                settings.Username = userTxt.Text;
+                settings.Password = passwordTxt.Text;
+                settings.Mount = driveCombo.Text;
+                this.Hide();
+
+                if (!Connect())
+                {
+                    this.Show();
+                    MessageBox.Show("Ocurrió un error, por favor revise sus datos");
+                }
+            }
+            else
+            {
+                try
+                {
+                    DokanNet.DokanUnmount(settings.Mount[0]);
+                    enableControls();
+                }
+                catch
+                {
+                    Console.WriteLine("Drive not mounted");
+                }
             }
 
+        }
+
+        private void disableControls()
+        {
+            userTxt.Enabled = false;
+            passwordTxt.Enabled = false;
+            driveCombo.Enabled = false;
+            mountButton.Text = "Desmontar";
+        }
+
+        private void enableControls()
+        {
+            userTxt.Enabled = true;
+            passwordTxt.Enabled = true;
+            driveCombo.Enabled = true;
+            mountButton.Text = "Montar";
         }
 
         private void StartDAV()
@@ -156,6 +187,7 @@ namespace RacsaFS
                     break;
             }
 
+
         }
 
         private bool Connect()
@@ -181,10 +213,15 @@ namespace RacsaFS
                                                                            settings.Username,
                                                                            settings.Password,
                                                                            sizeFunc);
+
+
+            disableControls();
+
             Thread t = new Thread(new ThreadStart(StartDAV));
 
 
             t.Start();
+
             
 
             return true;
@@ -210,6 +247,7 @@ namespace RacsaFS
             {
                 DokanNet.DokanUnmount(settings.Mount[0]);
                 mounted = false;
+                enableControls();
             }
             else
             {
@@ -235,11 +273,10 @@ namespace RacsaFS
             this.Show();
         }
 
-        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void closeBtn_Click(object sender, EventArgs e)
         {
-            e.Cancel = true;
-            Hide();
+            this.Hide();
         }
-        
+
     }
 }

@@ -42,6 +42,7 @@
             this.userTxt = new System.Windows.Forms.TextBox();
             this.passwordTxt = new System.Windows.Forms.TextBox();
             this.mountButton = new System.Windows.Forms.Button();
+            this.closeBtn = new System.Windows.Forms.Button();
             this.notifyContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,7 +144,7 @@
             // 
             // mountButton
             // 
-            this.mountButton.Location = new System.Drawing.Point(114, 114);
+            this.mountButton.Location = new System.Drawing.Point(12, 112);
             this.mountButton.Name = "mountButton";
             this.mountButton.Size = new System.Drawing.Size(75, 23);
             this.mountButton.TabIndex = 6;
@@ -151,26 +152,38 @@
             this.mountButton.UseVisualStyleBackColor = true;
             this.mountButton.Click += new System.EventHandler(this.mountButton_Click);
             // 
+            // closeBtn
+            // 
+            this.closeBtn.Location = new System.Drawing.Point(114, 112);
+            this.closeBtn.Name = "closeBtn";
+            this.closeBtn.Size = new System.Drawing.Size(75, 23);
+            this.closeBtn.TabIndex = 7;
+            this.closeBtn.Text = "Cerrar";
+            this.closeBtn.UseVisualStyleBackColor = true;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(209, 149);
-            this.Controls.Add(this.mountButton);
+            this.ClientSize = new System.Drawing.Size(210, 165);
+            this.ControlBox = false;
+            this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.passwordTxt);
             this.Controls.Add(this.userTxt);
+            this.Controls.Add(this.mountButton);
             this.Controls.Add(this.driveCombo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.usernameLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
+            this.Text = "Racsa FS";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.notifyContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -192,6 +205,7 @@
         private System.Windows.Forms.ToolStripMenuItem configuraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
+        private System.Windows.Forms.Button closeBtn;
     }
 }
 
